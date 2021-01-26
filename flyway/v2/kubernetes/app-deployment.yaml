@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-flyway-migration-app
+  labels:
+    app: db-flyway-migration-app
+spec:
+  selector:
+    matchLabels:
+      app: db-flyway-migration-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db-flyway-migration-app
+    spec:
+      initContainers:
+        - name: db-flyway-migration-verification
+          image: example-flyway-database-migration:v2
+          imagePullPolicy: IfNotPresent
+          command:
+            - flyway
+            - validate
+      containers:
+        - name: db-flyway-migration-some-app
+          image: nginx:stable
+          imagePullPolicy: IfNotPresent
+

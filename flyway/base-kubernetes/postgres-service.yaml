@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-flyway-migration-postgres
+  labels:
+    app: db-flyway-migration-postgres
+spec:
+  selector:
+    app: db-flyway-migration-postgres
+  clusterIP: None
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP

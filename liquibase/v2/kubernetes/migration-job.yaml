@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-liquibase-migration-liquibase-v2
+spec:
+  template:
+    spec:
+      containers:
+        - name: db-liquibase-migration-liquibase-v2
+          image: example-liquibase-database-migration:v2
+          imagePullPolicy: IfNotPresent
+      restartPolicy: OnFailure
+  backoffLimit: 4
+

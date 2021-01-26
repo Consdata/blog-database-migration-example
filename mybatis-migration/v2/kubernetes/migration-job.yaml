@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-mybatis-migration-mybatis-v2
+spec:
+  template:
+    spec:
+      containers:
+        - name: db-mybatis-migration-mybatis-v2
+          image: example-mybatis-database-migration:v2
+          imagePullPolicy: IfNotPresent
+      restartPolicy: OnFailure
+  backoffLimit: 4
+

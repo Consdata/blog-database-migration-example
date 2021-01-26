@@ -1,0 +1,9 @@
+-- // Create Changelog
+
+CREATE TABLE TEST_TABLE2 (
+    COLUMN1 TEXT
+);
+
+-- //@UNDO
+
+DROP TABLE TEST_TABLE2;

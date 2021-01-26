@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-flyway-migration-flyway-v2
+spec:
+  template:
+    spec:
+      containers:
+        - name: db-flyway-migration-flyway-v2
+          image: example-flyway-database-migration:v2
+          imagePullPolicy: IfNotPresent
+      restartPolicy: OnFailure
+  backoffLimit: 4
+

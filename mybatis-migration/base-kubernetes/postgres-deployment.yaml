@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-mybatis-migration-postgres
+  labels:
+    app: db-mybatis-migration-postgres
+spec:
+  selector:
+    matchLabels:
+      app: db-mybatis-migration-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db-mybatis-migration-postgres
+    spec:
+      containers:
+        - name: db-mybatis-migration-postgres
+          image: postgres:13
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_USER
+              value: my_db
+            - name: POSTGRES_PASSWORD
+              value: password
+          ports:
+            - containerPort: 5432
+              name: db

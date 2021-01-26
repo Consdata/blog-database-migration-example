@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-migrate-mongo-migration-app
+  labels:
+    app: db-migrate-mongo-migration-app
+spec:
+  selector:
+    matchLabels:
+      app: db-migrate-mongo-migration-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db-migrate-mongo-migration-app
+    spec:
+      initContainers:
+        - name: db-migrate-mongo-migration-verification
+          image: example-migrate-mongo-database-migration:v1
+          imagePullPolicy: IfNotPresent
+          command:
+            - "bash"
+            - "-c"
+            - "migrate-mongo status | tee /dev/stderr | grep -q ' PENDING' && exit 1 || exit 0"
+      containers:
+        - name: db-migrate-mongo-migration-some-app
+          image: nginx:stable
+          imagePullPolicy: IfNotPresent
+

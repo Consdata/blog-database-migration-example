@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-liquibase-migration-app
+  labels:
+    app: db-liquibase-migration-app
+spec:
+  selector:
+    matchLabels:
+      app: db-liquibase-migration-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db-liquibase-migration-app
+    spec:
+      initContainers:
+        - name: db-liquibase-migration-verification
+          image: example-liquibase-database-migration:v2
+          imagePullPolicy: IfNotPresent
+          command:
+            - "bash"
+            - "-c"
+            - "/liquibase/docker-entrypoint.sh status | tee /dev/stderr | grep -q 'is up to date'"
+      containers:
+        - name: db-liquibase-migration-some-app
+          image: nginx:stable
+          imagePullPolicy: IfNotPresent
+
